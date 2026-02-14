@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استبيان الأطروحة البوكرية · نظام 𝕊</title>
+  <!-- خطوط جوجل -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (مجاني) للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Tahoma', sans-serif;
+      background: linear-gradient(145deg, #0b0719 0%, #1a142b 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #f0eae1;
+      position: relative;
+    }
+
+    /* خلفية ناعمة */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                  radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                  radial-gradient(2px 2px at 80px 120px, #fff, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .survey-card {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 50px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 175, 55, 0.1) inset;
+      padding: 45px 50px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 2px solid rgba(197, 160, 89, 0.3);
+      padding-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f5e7c8, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 10px 0 5px;
+      letter-spacing: 1px;
+    }
+
+    .header h2 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #c9c0b0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header h2 i {
+      color: #d4af37;
+      font-size: 2rem;
+    }
+
+    .math-badge {
+      background: rgba(0,0,0,0.4);
+      border-radius: 60px;
+      padding: 12px 30px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      border: 1px solid #d4af37;
+      margin: 25px 0 15px;
+      font-size: 1.6rem;
+      direction: ltr;
+    }
+
+    .math-badge span {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    .symbol-1 { color: #f5d742; text-shadow: 0 0 12px #f5d742; }
+    .symbol-0p { color: #c0c0c0; text-shadow: 0 0 10px #aaa; }
+    .symbol-circle1 { color: #4dd0e1; text-shadow: 0 0 12px #4dd0e1; }
+    .symbol-inf { color: #d6b0f2; text-shadow: 0 0 15px #d6b0f2; }
+    .symbol-in { color: #8fdfa0; text-shadow: 0 0 10px #8fdfa0; }
+
+    .intro-text {
+      background: rgba(212, 175, 55, 0.08);
+      border-radius: 40px;
+      padding: 25px 35px;
+      margin: 30px 0 25px;
+      border-right: 6px solid #d4af37;
+      font-size: 1.2rem;
+      line-height: 1.9;
+      text-align: justify;
+    }
+
+    .intro-text strong {
+      color: #d4af37;
+      font-weight: 700;
+    }
+
+    /* تنسيق النموذج */
+    .survey-form {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+    }
+
+    .question-block {
+      background: rgba(20, 15, 30, 0.5);
+      border-radius: 40px;
+      padding: 25px 35px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      transition: all 0.2s;
+    }
+    .question-block:hover {
+      border-color: #d4af37;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+    }
+
+    .question-label {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffeaac;
+    }
+    .question-label i {
+      color: #d4af37;
+      font-size: 1.8rem;
+      width: 1.8rem;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px 40px;
+      align-items: center;
+    }
+
+    .radio-option, .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .radio-option input, .checkbox-option input {
+      width: 22px;
+      height: 22px;
+      accent-color: #d4af37;
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+
+    textarea, input[type="text"], input[type="email"] {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #5f4e33;
+      border-radius: 30px;
+      padding: 18px 25px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.2rem;
+      color: #f5f0e6;
+      resize: vertical;
+      transition: all 0.2s;
+    }
+    textarea:focus, input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 25px #d4af37;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    input[type="range"] {
+      flex: 1;
+      min-width: 250px;
+      height: 10px;
+      background: linear-gradient(90deg, #2d1b4e, #d4af37);
+      border-radius: 20px;
+      -webkit-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid #d4af37;
+      box-shadow: 0 0 20px gold;
+      cursor: pointer;
+    }
+    #ratingValue {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #d4af37;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    /* شريط الأدوات */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 45px 0 25px;
+    }
+    .btn {
+      background: rgba(20, 20, 30, 0.8);
+      backdrop-filter: blur(8px);
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 16px 35px;
+      border-radius: 60px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .btn i { font-size: 1.6rem; }
+    .btn:hover {
+      background: #d4af37;
+      color: #1a142b;
+      transform: scale(1.05);
+      box-shadow: 0 0 40px #d4af37;
+    }
+    .btn.secondary {
+      border-color: #9f7aea;
+      color: #c7b0ff;
+    }
+    .btn.secondary:hover {
+      background: #9f7aea;
+      color: #0b0719;
+      border-color: #9f7aea;
+      box-shadow: 0 0 40px #b794f4;
+    }
+
+    /* footer */
+    .signature {
+      margin-top: 40px;
+      text-align: center;
+      color: #aaa;
+      border-top: 1px dashed #5f4e33;
+      padding-top: 25px;
+      font-size: 1.1rem;
+    }
+    .signature strong { color: #d4af37; }
+
+    /* نافذة عرض النتيجة */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #201c2b;
+      border: 3px solid #d4af37;
+      border-radius: 60px;
+      padding: 40px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: #f0eae1;
+      direction: ltr;
+      text-align: left;
+      box-shadow: 0 0 80px #d4af37;
+    }
+    .modal-content h3 {
+      font-size: 2rem;
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .modal-content pre {
+      background: #2a2536;
+      padding: 25px;
+      border-radius: 30px;
+      font-size: 1rem;
+      direction: ltr;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      border: 1px solid #d4af37;
+    }
+    .close-modal {
+      display: block;
+      width: fit-content;
+      margin: 20px auto 0;
+      background: #d4af37;
+      border: none;
+      color: #1a142b;
+      font-size: 1.4rem;
+      padding: 12px 40px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+      .survey-card { padding: 25px 20px; }
+      .header h1 { font-size: 2.4rem; }
+      .question-block { padding: 20px; }
+      .btn { font-size: 1.1rem; padding: 14px 25px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="survey-card">
+    <div class="header">
+      <h1>📋 استبيان الأطروحة البوكرية</h1>
+      <h2><i class="fas fa-crown"></i> نظام 𝕊 – الثالوث الرياضي <i class="fas fa-infinity"></i></h2>
+      <div class="math-badge">
+        <span class="symbol-1">❶</span> ⊕ <span class="symbol-0p">0ₚ</span> = <span class="symbol-circle1">①</span> = <span class="symbol-inf">∞</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span class="symbol-inf">∞</span> = ⨁<sub>i=1</sub><sup>∞</sup> R<sub>i</sub>
+      </div>
+    </div>
+
+    <div class="intro-text">
+      <p><strong>بسم الله الرحمن الرحيم</strong> — في إطار مشروع <strong>“عين أحمد: النظام الإلهي”</strong> ونظرية <strong>البيان البوكري (𝕊)</strong>، ندعوكم للمشاركة في هذا الاستبيان الذي يهدف إلى قياس مدى وضوح الأفكار، وجمع الاقتراحات، وتقييم أثر هذه الرؤية الفلسفية-الرياضية. تستغرق الإجابة حوالي 10 دقائق، ويمكنك حفظ مسودة والعودة لاحقاً، ثم تصدير إجاباتك أو مشاركتها.</p>
+    </div>
+
+    <!-- النموذج الرئيسي -->
+    <form id="surveyForm" class="survey-form" onsubmit="event.preventDefault();">
+      <!-- السؤال الأول: التعرف على النظام -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-eye"></i> 1. هل سبق لك الاطلاع على نظام 𝕊 (الأطروحة البوكرية) قبل اليوم؟</div>
+        <div class="options-grid">
+          <label class="radio-option"><input type="radio" name="q1" value="نعم، أعرفه جيداً"> نعم، أعرفه جيداً</label>
+          <label class="radio-option"><input type="radio" name="q1" value="سمعت عنه فقط"> سمعت عنه فقط</label>
+          <label class="radio-option"><input type="radio" name="q1" value="لا، هذه المرة الأولى"> لا، هذه المرة الأولى</label>
+        </div>
+      </div>
+
+      <!-- السؤال الثاني: الانطباع العام -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-star"></i> 2. كيف تقيّم الفكرة المركزية (❶ المطلق، 0ₚ الإمكان، ∞ العلاقة)؟</div>
+        <div class="options-grid">
+          <label class="radio-option"><input type="radio" name="q2" value="مبتكرة وعميقة"> مبتكرة وعميقة</label>
+          <label class="radio-option"><input type="radio" name="q2" value="مثيرة للاهتمام"> مثيرة للاهتمام</label>
+          <label class="radio-option"><input type="radio" name="q2" value="غامضة / صعبة الفهم"> غامضة / صعبة الفهم</label>
+          <label class="radio-option"><input type="radio" name="q2" value="غير مقنعة"> غير مقنعة</label>
+        </div>
+      </div>
+
+      <!-- السؤال الثالث: الرموز الخاصة -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-font"></i> 3. أي رمز وجدت أكثر تأثيراً أو وضوحاً؟ (يمكن اختيار أكثر من خيار)</div>
+        <div class="options-grid">
+          <label class="checkbox-option"><input type="checkbox" name="q3" value="❶ الواحد المطلق"> ❶ الواحد المطلق</label>
+          <label class="checkbox-option"><input type="checkbox" name="q3" value="0ₚ الإمكان المحض"> 0ₚ الإمكان المحض</label>
+          <label class="checkbox-option"><input type="checkbox" name="q3" value="① أول المخلوقات"> ① أول المخلوقات</label>
+          <label class="checkbox-option"><input type="checkbox" name="q3" value="∞ اللانهاية العلائقية"> ∞ اللانهاية العلائقية</label>
+          <label class="checkbox-option"><input type="checkbox" name="q3" value="∈ الانتماء"> ∈ الانتماء</label>
+        </div>
+      </div>
+
+      <!-- السؤال الرابع: التطبيقات -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-flask"></i> 4. أي تطبيق من تطبيقات النظام (فيزياء، وعي، حاسوب...) تراه الأكثر وعداً؟</div>
+        <select name="q4" style="width:100%; background:rgba(0,0,0,0.5); border:2px solid #5f4e33; border-radius:60px; padding:18px 25px; font-size:1.2rem; color:#f5f0e6;">
+          <option value="" disabled selected>--- اختر ---</option>
+          <option value="تفسير ميكانيكا الكم">تفسير ميكانيكا الكم</option>
+          <option value="الجاذبية والكون">الجاذبية والكون</option>
+          <option value="نظرية الأعداد والأولية">نظرية الأعداد والأولية</option>
+          <option value="الوعي والذكاء الاصطناعي">الوعي والذكاء الاصطناعي</option>
+          <option value="الرياضيات التأسيسية">الرياضيات التأسيسية</option>
+          <option value="لا رأي محدد">لا رأي محدد</option>
+        </select>
+      </div>
+
+      <!-- السؤال الخامس: مقياس الاستقرار البنيوي BS -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-chart-line"></i> 5. ما مدى اقتناعك بمفهوم "الاستقرار البنيوي (BS)" كأداة كمية؟ (اسحب)</div>
+        <div class="slider-container">
+          <span style="font-size:1.3rem;">منخفض</span>
+          <input type="range" id="bsSlider" name="q5" min="0" max="10" value="6" step="1">
+          <span style="font-size:1.3rem;">مرتفع</span>
+          <span id="ratingValue">6</span><span style="font-size:1.3rem;">/10</span>
+        </div>
+      </div>
+
+      <!-- السؤال السادس: النقد / الاقتراحات (حقل مفتوح) -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-pencil-alt"></i> 6. ملاحظاتك النقدية أو استفساراتك حول النظام (البنية، التطبيقات، الفلسفة)</div>
+        <textarea name="q6" rows="4" placeholder="اكتب هنا ..."></textarea>
+      </div>
+
+      <!-- السؤال السابع: اقتراحات مستقبلية -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-lightbulb"></i> 7. هل لديك اقتراحات لتطوير الفكرة أو تطبيقات جديدة؟</div>
+        <textarea name="q7" rows="3" placeholder="مثلاً: تجربة فيزيائية مقترحة، نموذج رياضي..."></textarea>
+      </div>
+
+      <!-- معلومات اختيارية -->
+      <div class="question-block">
+        <div class="question-label"><i class="fas fa-user"></i> 8. معلومات التواصل (اختيارية – لن تُستخدم إلا لأغراض المتابعة)</div>
+        <input type="text" name="name" placeholder="الاسم (اختياري)" style="margin-bottom:15px;">
+        <input type="email" name="email" placeholder="البريد الإلكتروني (اختياري)">
+      </div>
+
+      <!-- شريط أدوات الحفظ والتصدير -->
+      <div class="toolbar">
+        <button type="button" class="btn" id="saveDraftBtn"><i class="fas fa-save"></i> حفظ المسودة محلياً</button>
+        <button type="button" class="btn secondary" id="loadDraftBtn"><i class="fas fa-undo-alt"></i> تحميل آخر مسودة</button>
+        <button type="button" class="btn" id="exportBtn"><i class="fas fa-download"></i> تصدير الإجابات (JSON)</button>
+        <button type="button" class="btn secondary" id="submitBtn"><i class="fas fa-paper-plane"></i> عرض النتيجة / المشاركة</button>
+      </div>
+    </form>
+
+    <div class="signature">
+      <strong>أحمد علي بوكر نسيب</strong> •  فبراير 2026 •  <i class="fas fa-atom"></i>  𝕊  •  جميع الردود سرية وتُحلل لأغراض بحثية
+    </div>
+  </div>
+
+  <!-- Modal لعرض النتيجة المجمعة -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="modal-content">
+      <h3><i class="fas fa-clipboard-list"></i> ملخص الإجابات</h3>
+      <pre id="resultPre"></pre>
+      <button class="close-modal" id="closeModalBtn">إغلاق</button>
+      <p style="text-align:center; margin-top:15px;">يمكنك نسخ هذا النص ومشاركته عبر البريد أو أي وسيلة.</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // الحصول على عناصر النموذج
+      const form = document.getElementById('surveyForm');
+      const bsSlider = document.getElementById('bsSlider');
+      const ratingSpan = document.getElementById('ratingValue');
+      const saveBtn = document.getElementById('saveDraftBtn');
+      const loadBtn = document.getElementById('loadDraftBtn');
+      const exportBtn = document.getElementById('exportBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const modal = document.getElementById('resultModal');
+      const resultPre = document.getElementById('resultPre');
+      const closeModal = document.getElementById('closeModalBtn');
+
+      // تحديث قيمة شريط التمرير
+      bsSlider.addEventListener('input', function() {
+        ratingSpan.textContent = bsSlider.value;
+      });
+
+      // دالة لجلب جميع بيانات النموذج ككائن
+      function getFormData() {
+        const formData = new FormData(form);
+        const data = {};
+        for (let [key, val] of formData.entries()) {
+          if (key === 'q3') {
+            if (!data.q3) data.q3 = [];
+            data.q3.push(val);
+          } else {
+            data[key] = val;
+          }
+        }
+        // التأكد من وجود q3 كمصفوفة حتى لو لم يُختر شيء
+        if (!data.q3) data.q3 = [];
+        // إضافة قيمة السلايدر (قد تكون موجودة من formData ولكن نضمنها)
+        data.q5 = bsSlider.value;
+        return data;
+      }
+
+      // حفظ المسودة إلى localStorage
+      saveBtn.addEventListener('click', function() {
+        const data = getFormData();
+        localStorage.setItem('boukerSurveyDraft', JSON.stringify(data));
+        alert('✅ تم حفظ المسودة في متصفحك بنجاح.');
+      });
+
+      // تحميل المسودة من localStorage
+      loadBtn.addEventListener('click', function() {
+        const saved = localStorage.getItem('boukerSurveyDraft');
+        if (!saved) {
+          alert('📭 لا توجد مسودة محفوظة.');
+          return;
+        }
+        try {
+          const data = JSON.parse(saved);
+          // تعبئة الحقول حسب الأسماء
+          for (let key in data) {
+            if (key === 'q5') {
+              bsSlider.value = data[key];
+              ratingSpan.textContent = data[key];
+            } else if (key === 'q3') {
+              // checkbox group
+              const checkboxes = document.querySelectorAll('input[name="q3"]');
+              checkboxes.forEach(cb => {
+                cb.checked = data.q3.includes(cb.value);
+              });
+            } else {
+              const field = document.querySelector(`[name="${key}"]`);
+              if (field) {
+                if (field.type === 'radio') {
+                  const radio = document.querySelector(`[name="${key}"][value="${data[key]}"]`);
+                  if (radio) radio.checked = true;
+                } else {
+                  field.value = data[key];
+                }
+              }
+            }
+          }
+          alert('📂 تم تحميل آخر مسودة.');
+        } catch (e) {
+          alert('فشل تحميل المسودة.');
+        }
+      });
+
+      // تصدير كملف JSON
+      exportBtn.addEventListener('click', function() {
+        const data = getFormData();
+        const jsonStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `bouker_survey_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+
+      // عرض النتيجة في المودال (محاكاة الإرسال)
+      submitBtn.addEventListener('click', function() {
+        const data = getFormData();
+        // بناء نص جميل
+        let output = '';
+        output += '📌 استبيان الأطروحة البوكرية\n';
+        output += '══════════════════════════════\n';
+        output += `1. الاطلاع السابق: ${data.q1 || '(لم يجب)'}\n`;
+        output += `2. تقييم الفكرة: ${data.q2 || '(لم يجب)'}\n`;
+        output += `3. الرموز المختارة: ${data.q3.length ? data.q3.join('، ') : 'لا شيء'}\n`;
+        output += `4. التطبيق الأكثر وعداً: ${data.q4 || '(لم يختر)'}\n`;
+        output += `5. مقياس BS: ${data.q5}/10\n`;
+        output += `6. ملاحظات: ${data.q6 || '(فارغ)'}\n`;
+        output += `7. اقتراحات: ${data.q7 || '(فارغ)'}\n`;
+        output += `8. الاسم: ${data.name || '(لم يذكر)'}\n`;
+        output += `   البريد: ${data.email || '(لم يذكر)'}\n`;
+        output += '══════════════════════════════\n';
+        output += `🕒 ${new Date().toLocaleString('ar-EG')}\n`;
+        output += '— شكراً لمشاركتك —';
+
+        resultPre.textContent = output;
+        modal.style.display = 'flex';
+      });
+
+      // إغلاق المودال
+      closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      window.addEventListener('click', function(e) {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+
+      // محاولة تحميل المسودة تلقائياً عند بدء الصفحة (اختياري)
+      window.addEventListener('load', function() {
+        if (localStorage.getItem('boukerSurveyDraft')) {
+          if (confirm('📎 توجد مسودة سابقة. هل تريد تحميلها؟')) {
+            loadBtn.click();
+          }
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
